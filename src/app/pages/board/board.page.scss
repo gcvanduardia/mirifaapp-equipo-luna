@@ -1,0 +1,74 @@
+ion-toolbar {
+  --background: linear-gradient(90deg, #b39ddb 0%, #ffe066 100%);
+  color: #222;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  position: relative;
+  overflow: hidden;
+}
+
+ion-content {
+  --background: 
+    linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)),
+    url('/assets/images/logo1.jpeg') right;
+  --background-size: cover;
+}
+
+.board {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #ffe066 0%, #b39ddb 100%);
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+ion-grid, ion-row {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+ion-col {
+  min-width: 43px;
+}
+
+.ticket-cell {
+  padding: 0 !important;
+  margin: 2px;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s, transform 0.15s;
+  position: relative;
+  color: #000;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cell:hover {
+    transform: scale(1.3);
+    z-index: 2;
+  }
+}
+
+.ticket-cell.sold .cell {
+  background: #f8d7da;
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.cell ion-icon {
+  color: #dc3545;
+  font-size: 1.5em;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+}

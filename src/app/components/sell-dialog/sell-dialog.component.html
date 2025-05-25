@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Vender #{{number}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">✕</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form">
+    <ion-item>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input formControlName="buyer_name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Email</ion-label>
+      <ion-input formControlName="buyer_email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Cédula</ion-label>
+      <ion-input formControlName="buyer_cc"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Teléfono</ion-label>
+      <ion-input formControlName="buyer_phone"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-select formControlName="payment_method" label="Método de pago" aria-label="Método de pago">
+        <ion-select-option value="efectivo">Efectivo</ion-select-option>
+        <ion-select-option value="transferencia">Transferencia</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-button expand="full" (click)="sell()" [disabled]="form.invalid">
+      Confirmar
+    </ion-button>
+  </form>
+</ion-content>
