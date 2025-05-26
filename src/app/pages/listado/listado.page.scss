@@ -1,0 +1,40 @@
+.table-container {
+  overflow-x: auto;
+  margin-top: 16px;
+}
+
+.boletas-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 0.97em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.boletas-table th, .boletas-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.boletas-table th {
+  background: #f3e9ff;
+  color: #4b3f72;
+  font-weight: 600;
+}
+
+.boletas-table tr:last-child td {
+  border-bottom: none;
+  color: #000;
+}
+
+.boletas-table td {
+  vertical-align: middle;
+  color: #000;
+}
+
+.boletas-table small {
+  color: #888;
+}
