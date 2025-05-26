@@ -8,11 +8,16 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-refresher slot="fixed" (ionRefresh)="loadSold()">
+  <ion-refresher slot="fixed" (ionRefresh)="loadSold($event)" *ngIf="!isLoading">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="table-container" *ngIf="!isLoading && soldTickets.length > 0">
+  <ion-item lines="none">
+    <ion-input placeholder="Buscar boleta, comprador, vendedor, método, email, etc." [(ngModel)]="searchTerm"
+      (ionInput)="filterTickets()" clearInput></ion-input>
+  </ion-item>
+
+  <div class="table-container" *ngIf="!isLoading && filteredTickets.length > 0">
     <table class="boletas-table">
       <thead>
         <tr>
@@ -27,7 +32,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let t of soldTickets">
+        <tr *ngFor="let t of filteredTickets">
           <td>{{ t.number }}</td>
           <td>{{ t.payment_method | titlecase }}</td>
           <td>{{ t.buyer_name }}</td>

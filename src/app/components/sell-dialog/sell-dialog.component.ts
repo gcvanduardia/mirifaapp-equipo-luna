@@ -16,7 +16,7 @@ export class SellDialogComponent {
   @Input() number!: number;
   form = this.fb.group({
     buyer_name: ['', Validators.required],
-    buyer_email: ['', [Validators.required, Validators.email]],
+    buyer_email: ['', [Validators.email]],
     buyer_cc: [''],
     buyer_phone: ['', Validators.required],
     payment_method: ['efectivo', Validators.required]

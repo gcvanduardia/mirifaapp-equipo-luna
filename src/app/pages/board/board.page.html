@@ -7,23 +7,19 @@
       </ion-button>
       <ion-button *ngIf="user?.id" shape="round" (click)="openUserMenu($event)">
         <ion-icon size="large" name="person-circle-outline"></ion-icon>
+        <ion-text>{{ user?.name || 'Usuario' }}</ion-text>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-popover
-  [isOpen]="userMenuOpen"
-  [event]="userMenuEvent"
-  (didDismiss)="userMenuOpen = false"
-  mode="ios"
->
-<ng-template>
-  <ion-list>
-    <ion-item button (click)="logout()">Cerrar sesión</ion-item>
-    <ion-item button (click)="verListado()">Ver listado</ion-item>
-  </ion-list>
-</ng-template>
+<ion-popover [isOpen]="userMenuOpen" [event]="userMenuEvent" (didDismiss)="userMenuOpen = false" mode="ios">
+  <ng-template>
+    <ion-list>
+      <ion-item button (click)="logout()">Cerrar sesión</ion-item>
+      <ion-item button (click)="verListado()">Ver listado</ion-item>
+    </ion-list>
+  </ng-template>
 </ion-popover>
 
 <ion-content class="ion-padding">
