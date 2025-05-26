@@ -1,0 +1,20 @@
+<ion-header><ion-toolbar><ion-title>Iniciar Sesión</ion-title></ion-toolbar></ion-header>
+<ion-content class="ion-padding">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <ion-item>
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input formControlName="email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Contraseña</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+          <ion-button expand="full" type="submit" [disabled]="form.invalid">Entrar</ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

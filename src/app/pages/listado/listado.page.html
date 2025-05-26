@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/board"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">listado boletas vendidas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="loadSold()">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="!isLoading">
+    <ion-item *ngFor="let t of soldTickets">
+      <ion-label>
+        <h2>#{{ t.number }} – {{ t.payment_method | titlecase }}</h2>
+        <p>Comprador: {{ t.buyer_name }} (CC: {{ t.buyer_cc }})</p>
+        <p>Email: {{ t.buyer_email }}, Tel: {{ t.buyer_phone }}</p>
+        <p>Vendida por: {{ t.seller_name }} ({{ t.seller_email }})</p>
+        <p>Fecha: {{ t.sold_at | date:'short' }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-spinner *ngIf="isLoading" name="dots"></ion-spinner>
+  <p *ngIf="!isLoading && soldTickets.length === 0">Aún no se ha vendido ninguna boleta.</p>
+</ion-content>

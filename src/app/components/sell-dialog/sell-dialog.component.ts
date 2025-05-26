@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TicketsService } from '../../services/tickets/tickets.service';
-import { ModalController, IonButton, IonInput, IonItem, IonLabel, IonContent, IonSelect, IonSelectOption, IonHeader, IonToolbar, IonTitle, IonButtons } from '@ionic/angular/standalone';
+import { ModalController, IonButton, IonInput, IonItem, IonLabel, IonContent, IonSelect, IonSelectOption, IonHeader, IonToolbar, IonTitle, IonButtons, ToastController } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-sell-modal',
@@ -20,24 +21,47 @@ export class SellDialogComponent {
     buyer_phone: ['', Validators.required],
     payment_method: ['efectivo', Validators.required]
   });
+  user: any;
 
   constructor(
     private fb: FormBuilder,
     private svc: TicketsService,
-    private modalCtrl: ModalController
-  ) {}
+    private modalCtrl: ModalController,
+    private auth: AuthService,
+    private toastCtrl: ToastController
+  ) { }
 
-  sell() {
+  ngOnInit() {
+    this.getUser();
+  }
+
+  async sell() {
     if (this.form.invalid) return;
+    if (!this.user?.id) return;
     this.svc.sellTicket(this.number, {
       ...this.form.value,
-      seller_id: 1
-    }).subscribe(() =>
-      this.modalCtrl.dismiss({ sold: true })
-    );
+      seller_id: this.user.id,
+    }).subscribe(async () => {
+      const toast = await this.toastCtrl.create({
+        message: '¡Boleta vendida correctamente!',
+        duration: 2000,
+        color: 'success',
+        position: 'top'
+      });
+      await toast.present();
+      this.modalCtrl.dismiss({ sold: true });
+    });
   }
 
   close() {
     this.modalCtrl.dismiss();
+  }
+
+  getUser() {
+    this.auth.user$.subscribe(user => {
+      if (!user) return;
+      this.user = user;
+      console.log('User in sell-dialog:', user);
+    });
   }
 }
