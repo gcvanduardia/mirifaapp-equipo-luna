@@ -69,6 +69,13 @@ export class BoardPage {
     }, 200);
   }
 
+  register() {
+    this.userMenuOpen = false;
+    setTimeout(() => {
+      this.router.navigate(['/register']);
+    }, 200);
+  }
+
   async openSell(number: number) {
     if (this.tickets[number]?.sold_at) return;
     if (!this.user?.id) return;

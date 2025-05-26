@@ -18,6 +18,7 @@
     <ion-list>
       <ion-item button (click)="logout()">Cerrar sesión</ion-item>
       <ion-item button (click)="verListado()">Ver listado</ion-item>
+      <ion-item button (click)="register()" *ngIf="user.role=='admin'">Nuevo usuario</ion-item>
     </ion-list>
   </ng-template>
 </ion-popover>
