@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage-angular';
 import { BehaviorSubject, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 interface LoginResp { token: string; }
 interface User { id: number; name: string; role: string; }
@@ -11,7 +12,7 @@ export class AuthService {
     private _user = new BehaviorSubject<User | null>(null);
     user$ = this._user.asObservable();
     private readonly TOKEN_KEY = 'auth-token';
-    private readonly API_URL = 'http://localhost:3000/api/auth';
+    private readonly API_URL = `${environment.apiUrl}/auth`;
 
     constructor(private http: HttpClient, private storage: Storage) {
         this.storage.create().then(() => this.loadUser());

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface Ticket { number: number; sold_at: string | null; }
 export interface SoldTicket extends Ticket {
@@ -18,7 +19,7 @@ export interface SoldTicket extends Ticket {
   providedIn: 'root'
 })
 export class TicketsService {
-  private apiUrl = 'http://localhost:3000/api/tickets';
+  private apiUrl = `${environment.apiUrl}/tickets`;
   constructor(private http: HttpClient) {}
   getTickets(): Observable<Ticket[]> {
     return this.http.get<Ticket[]>(this.apiUrl);
