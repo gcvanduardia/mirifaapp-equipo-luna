@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 })
 export class BoardPage {
   tickets: Record<number, Ticket> = {};
-  numbers = Array.from({ length: 120 }, (_, i) => i + 1);
+  numbers = Array.from({ length: 160 }, (_, i) => i + 1);
   user: any;
   userMenuOpen = false;
   userMenuEvent: any;
