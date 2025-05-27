@@ -19,7 +19,8 @@ export class SellDialogComponent {
     buyer_email: ['', [Validators.email]],
     buyer_cc: [''],
     buyer_phone: ['', Validators.required],
-    payment_method: ['efectivo', Validators.required]
+    payment_method: ['efectivo', Validators.required],
+    ticket_price: [10000, Validators.required],
   });
   user: any;
 
@@ -61,7 +62,6 @@ export class SellDialogComponent {
     this.auth.user$.subscribe(user => {
       if (!user) return;
       this.user = user;
-      console.log('User in sell-dialog:', user);
     });
   }
 }

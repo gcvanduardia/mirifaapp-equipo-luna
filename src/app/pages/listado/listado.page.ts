@@ -37,7 +37,6 @@ export class ListadoPage implements OnInit {
         this.nav.navigateRoot('/board');
       };
       this.user = user;
-      console.log('User in listado:', user);
     });
   }
 

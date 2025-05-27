@@ -34,8 +34,6 @@ export class LoginPage implements OnInit {
     this.auth.user$.subscribe(user => {
       if (!user) return;
       this.user = user;
-      console.log('User in login:', user);
-      this.nav.navigateRoot('/board');
     });
   }
 

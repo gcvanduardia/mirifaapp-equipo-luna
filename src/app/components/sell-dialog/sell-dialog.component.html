@@ -26,10 +26,15 @@
       <ion-input formControlName="buyer_phone"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-select formControlName="payment_method" label="Método de pago" aria-label="Método de pago">
+      <ion-label position="stacked"><strong>*</strong>Método de pago</ion-label>
+      <ion-select formControlName="payment_method">
         <ion-select-option value="efectivo">Efectivo</ion-select-option>
         <ion-select-option value="transferencia">Transferencia</ion-select-option>
       </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked"><strong>*</strong>Valor - ({{form.get('ticket_price')?.value | currency:'$':'symbol':'1.0-0'}})</ion-label>
+      <ion-input formControlName="ticket_price"></ion-input>
     </ion-item>
     <ion-button expand="full" (click)="sell()" [disabled]="form.invalid">
       Confirmar
