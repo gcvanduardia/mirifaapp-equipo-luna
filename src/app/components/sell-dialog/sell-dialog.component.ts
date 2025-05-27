@@ -42,15 +42,27 @@ export class SellDialogComponent {
     this.svc.sellTicket(this.number, {
       ...this.form.value,
       seller_id: this.user.id,
-    }).subscribe(async () => {
-      const toast = await this.toastCtrl.create({
-        message: '¡Boleta vendida correctamente!',
-        duration: 2000,
-        color: 'success',
-        position: 'top'
-      });
-      await toast.present();
-      this.modalCtrl.dismiss({ sold: true });
+    }).subscribe({
+      next: async () => {
+        const toast = await this.toastCtrl.create({
+          message: '¡Boleta vendida correctamente!',
+          duration: 2000,
+          color: 'success',
+          position: 'top'
+        });
+        await toast.present();
+        this.modalCtrl.dismiss({ sold: true });
+      },
+      error: async (err) => {
+        const msg = err?.error?.error || 'Error al vender la boleta';
+        const toast = await this.toastCtrl.create({
+          message: msg,
+          duration: 2500,
+          color: 'danger',
+          position: 'top'
+        });
+        await toast.present();
+      }
     });
   }
 
