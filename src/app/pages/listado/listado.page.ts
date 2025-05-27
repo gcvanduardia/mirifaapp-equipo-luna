@@ -37,6 +37,7 @@ export class ListadoPage implements OnInit {
         this.nav.navigateRoot('/board');
       };
       this.user = user;
+      this.nav.navigateRoot('/listado');
     });
   }
 
