@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonRefresher, IonRefresherContent, IonItem, IonSpinner, IonButtons, IonBackButton, IonInput } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonRefresher, IonRefresherContent, IonItem, IonSpinner, IonButtons, IonBackButton, IonInput, IonButton, IonFooter, IonIcon } from '@ionic/angular/standalone';
 import { TicketsService, SoldTicket } from '../../services/tickets/tickets.service';
 import { AuthService } from "../../services/auth/auth.service";
 import { NavController } from '@ionic/angular';
@@ -11,7 +11,7 @@ import { NavController } from '@ionic/angular';
   templateUrl: './listado.page.html',
   styleUrls: ['./listado.page.scss'],
   standalone: true,
-  imports: [IonBackButton, IonButtons, IonSpinner, IonItem, IonRefresherContent, IonRefresher, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonInput]
+  imports: [ IonFooter, IonBackButton, IonButtons, IonSpinner, IonItem, IonRefresherContent, IonRefresher, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonInput ]
 })
 export class ListadoPage implements OnInit {
   soldTickets: SoldTicket[] = [];
@@ -69,6 +69,10 @@ export class ListadoPage implements OnInit {
       (t.seller_name || '').toLowerCase().includes(term) ||
       (t.seller_email || '').toLowerCase().includes(term)
     );
+  }
+
+  get total(): number {
+    return this.filteredTickets.reduce((sum, t) => sum + (Number(t.ticket_price) || 0), 0);
   }
 
 }

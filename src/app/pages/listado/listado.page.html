@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header mode="ios">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/board"></ion-back-button>
@@ -8,14 +8,19 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+
   <ion-refresher slot="fixed" (ionRefresh)="loadSold($event)" *ngIf="!isLoading">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-item lines="none">
-    <ion-input placeholder="Buscar boleta, comprador, vendedor, método, email, etc." [(ngModel)]="searchTerm"
-      (ionInput)="filterTickets()" clearInput></ion-input>
-  </ion-item>
+  <div class="sticky-search">
+    <ion-item lines="none">
+      <ion-input placeholder="Buscar boleta, comprador, vendedor, método, email, etc."
+        [(ngModel)]="searchTerm"
+        (ionInput)="filterTickets()" clearInput>
+      </ion-input>
+    </ion-item>
+  </div>
 
   <div class="table-container" *ngIf="!isLoading && filteredTickets.length > 0">
     <table class="boletas-table">
@@ -51,3 +56,8 @@
   <ion-spinner *ngIf="isLoading" name="dots"></ion-spinner>
   <p *ngIf="!isLoading && soldTickets.length === 0">Aún no se ha vendido ninguna boleta.</p>
 </ion-content>
+<ion-footer mode="ios">
+  <ion-toolbar mode="ios">
+    <ion-title class="ion-text-center">Total: {{ total | currency:'$':'symbol':'1.0-0' }}</ion-title>
+  </ion-toolbar>
+</ion-footer>
