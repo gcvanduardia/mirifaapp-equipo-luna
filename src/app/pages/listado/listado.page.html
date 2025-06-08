@@ -51,7 +51,7 @@
           <td>{{ t.buyer_email }}</td>
           <td>{{ t.buyer_phone }}</td>
           <td>{{ t.seller_name }}<br><small>{{ t.seller_email }}</small></td>
-          <td>{{ t.sold_at | date:'dd/MM/yy HH:mm' }}</td>
+          <td>{{ formatSoldAt(t) }}</td>
           <td>{{ t.ticket_price | currency:'$':'symbol':'1.0-0'}}</td>
         </tr>
       </tbody>
