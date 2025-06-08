@@ -72,3 +72,9 @@ ion-item {
   border: 1px solid #000;
   border-radius: 8px;
 }
+
+@media (max-width: 530px) {
+  ion-header ion-text {
+    display: none !important;
+  }
+}

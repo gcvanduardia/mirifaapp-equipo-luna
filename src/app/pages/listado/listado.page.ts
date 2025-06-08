@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonRefresher, IonRefresherContent, IonItem, IonSpinner, IonButtons, IonBackButton, IonInput, IonButton, IonFooter, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonRefresher, IonRefresherContent, IonItem, IonSpinner, IonButtons, IonBackButton, IonInput, IonButton, IonFooter, IonIcon, IonText } from '@ionic/angular/standalone';
 import { TicketsService, SoldTicket } from '../../services/tickets/tickets.service';
 import { AuthService } from "../../services/auth/auth.service";
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { cloudDownloadOutline } from 'ionicons/icons';
 import * as XLSX from 'xlsx';
@@ -15,7 +15,7 @@ import { saveAs } from 'file-saver';
   templateUrl: './listado.page.html',
   styleUrls: ['./listado.page.scss'],
   standalone: true,
-  imports: [IonFooter, IonBackButton, IonButtons, IonSpinner, IonItem, IonRefresherContent, IonRefresher, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonInput, IonButton, IonIcon]
+  imports: [IonText, IonFooter, IonBackButton, IonButtons, IonSpinner, IonItem, IonRefresherContent, IonRefresher, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonInput, IonButton, IonIcon]
 })
 export class ListadoPage implements OnInit {
   soldTickets: SoldTicket[] = [];
@@ -28,6 +28,7 @@ export class ListadoPage implements OnInit {
     private ticketSvc: TicketsService,
     private auth: AuthService,
     private nav: NavController,
+    private alertCtrl: AlertController
   ) { 
     addIcons({ cloudDownloadOutline });
   }
@@ -81,27 +82,45 @@ export class ListadoPage implements OnInit {
     return this.filteredTickets.reduce((sum, t) => sum + (Number(t.ticket_price) || 0), 0);
   }
 
-  exportToExcel() {
-    const data = this.filteredTickets.map(t => ({
-      Número: t.number,
-      Método: t.payment_method,
-      Comprador: t.buyer_name,
-      CC: t.buyer_cc,
-      Email: t.buyer_email,
-      Teléfono: t.buyer_phone,
-      Vendedor: t.seller_name,
-      'Email Vendedor': t.seller_email,
-      Fecha: t.sold_at,
-      Valor: t.ticket_price
-    }));
+  async exportToExcel() {
+    const alert = await this.alertCtrl.create({
+      header: 'Descargar Excel',
+      subHeader: '¿Deseas descargar el listado en Excel?',
+      message: 'Si tienes algun filtro aplicado, solo se descargarán los resultados filtrados.',
+      mode: 'ios',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Descargar',
+          handler: () => {
+            const data = this.filteredTickets.map(t => ({
+              Número: t.number,
+              Método: t.payment_method,
+              Comprador: t.buyer_name,
+              CC: t.buyer_cc,
+              Email: t.buyer_email,
+              Teléfono: t.buyer_phone,
+              Vendedor: t.seller_name,
+              'Email Vendedor': t.seller_email,
+              Fecha: t.sold_at,
+              Valor: t.ticket_price
+            }));
 
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Listado');
+            const worksheet = XLSX.utils.json_to_sheet(data);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Listado');
 
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-    saveAs(blob, 'listado_boletas_vendidas_equipo_luna.xlsx');
+            const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+            const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+            saveAs(blob, 'listado_boletas_vendidas_equipo_luna.xlsx');
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
 }
