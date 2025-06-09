@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar class="ion-text-center" mode="ios">
     <ion-text><b>Tablero de Boletas - ¡Equipo Luna!</b></ion-text>
+    <div style="margin-top: 6px;">
+      <ion-text color="primary">
+        Sorteo en: <b>⏳ {{ countdown }} 🎉</b>
+      </ion-text>
+    </div>
     <ion-buttons slot="end">
       <ion-button *ngIf="!user?.id" [routerLink]="['/login']" mode="ios" fill="solid" color="primary" shape="round">
         <ion-text>Iniciar Sesión</ion-text>

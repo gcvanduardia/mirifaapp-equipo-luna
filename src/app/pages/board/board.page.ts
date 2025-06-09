@@ -23,6 +23,7 @@ export class BoardPage {
   user: any;
   userMenuOpen = false;
   userMenuEvent: any;
+  countdown: string = '';
 
   constructor(
     private svc: TicketsService,
@@ -36,6 +37,7 @@ export class BoardPage {
   ngOnInit() {
     this.load();
     this.getUser();
+    this.startCountdown();
   }
 
   load() {
@@ -92,4 +94,25 @@ export class BoardPage {
   hasSold(n: number): boolean {
     return !!this.tickets[n]?.sold_at;
   }
+
+  startCountdown() {
+    const target = new Date('2025-06-12T20:00:00-05:00').getTime();
+    setInterval(() => {
+      const now = new Date().getTime();
+      let distance = target - now;
+
+      if (distance < 0) {
+        this.countdown = '¡El sorteo ha comenzado!';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      this.countdown = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
+  }
+
 }
