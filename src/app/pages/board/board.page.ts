@@ -24,6 +24,7 @@ export class BoardPage {
   userMenuOpen = false;
   userMenuEvent: any;
   countdown: string = '';
+  eventDate: String = "12/06/2025 8:00pm";
 
   constructor(
     private svc: TicketsService,
