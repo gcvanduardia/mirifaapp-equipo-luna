@@ -124,7 +124,6 @@ export class ListadoPage implements OnInit {
   }
 
   formatSoldAt(t: any): string {
-    // Si t.sold_at es "2025-06-08T10:12:40.110Z"
     return t.sold_at ? t.sold_at.slice(0, 16).replace('T', ' ') : '';
   }
 
