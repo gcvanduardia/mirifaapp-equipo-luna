@@ -20,7 +20,7 @@ export interface SoldTicket extends Ticket {
 })
 export class TicketsService {
   private apiUrl = `${environment.apiUrl}/tickets`;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   getTickets(): Observable<Ticket[]> {
     return this.http.get<Ticket[]>(this.apiUrl);
   }
@@ -29,5 +29,14 @@ export class TicketsService {
   }
   getSoldTickets(): Observable<SoldTicket[]> {
     return this.http.get<SoldTicket[]>(`${this.apiUrl}/sold`);
+  }
+  getTicketByNumber(number: number): Observable<Ticket | SoldTicket> {
+    return this.http.get<Ticket>(`${this.apiUrl}/${number}`);
+  }
+  markWinnerTicket(number: number) {
+    return this.http.post<{ message: string }>(`${this.apiUrl}/${number}/winner`, {});
+  }
+  getWinnerTicket() {
+    return this.http.get<Ticket | SoldTicket>(`${this.apiUrl}/winner`);
   }
 }

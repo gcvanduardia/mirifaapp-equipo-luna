@@ -4,7 +4,7 @@
     <div style="margin-top: 6px;">
       <ion-text color="primary">
         Sorteo: <b>🗓️ {{eventDate}} 🇨🇴</b><br>
-        Sorteo en: <b>⏳ {{ countdown }} 🎉</b>
+        <b>⏳ {{ countdown }} 🎉</b>
       </ion-text>
     </div>
     <ion-buttons slot="end">
@@ -13,7 +13,8 @@
       </ion-button>
       <ion-button *ngIf="user?.id" shape="round" (click)="openUserMenu($event)">
         <ion-icon size="large" name="person-circle-outline"></ion-icon>
-        <p style="padding: 0; margin: 0;"> <ion-text>{{ user?.name || 'Usuario' }}</ion-text><br><small>{{user?.role || 'role'}}</small> </p>
+        <p style="padding: 0; margin: 0;"> <ion-text>{{ user?.name || 'Usuario' }}</ion-text><br><small>{{user?.role ||
+            'role'}}</small> </p>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -32,8 +33,36 @@
 <ion-content class="ion-padding">
   <div class="board">
     <ion-grid>
+      <ion-row *ngIf="sorteoHabilitado">
+        <ion-col>
+          <div style="text-align:center; margin: 0;">
+            <h2 style="margin-top: 0;">🎲 Número ganador</h2>
+            <div style="font-size: 4rem; font-weight: bold; margin: 0;">
+              {{ currentNumber }}
+            </div>
+            <ion-button color="primary" (click)="start()" [disabled]="user?.role !== 'admin'"
+              *ngIf="!isRunning && !contestEnd" modo="ios">
+              ¡Sortear!
+            </ion-button>
+            <div class="progress-bar-container" *ngIf="isRunning">
+              <div class="progress-bar" [style.width.%]="progress"></div>
+            </div>
+            <div *ngIf="winner !== null && !isRunning" style="margin-top:0.5rem;">
+              <ion-text color="success">
+                <b style="font-size: 2rem; line-height: 2.5rem;">
+                  🎉🥳 ¡El número ganador es {{ winner }}! 🥳🎉<br>
+                  <span style="font-size: 1.5rem;">
+                    felicitaciones a {{ganadorName}} por su premio.
+                  </span>
+                </b>
+              </ion-text>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
       <ion-row>
-        <ion-col size="0" *ngFor="let n of numbers" (click)="openSell(n)" [class.sold]="hasSold(n)" class="ticket-cell">
+        <ion-col size="auto" *ngFor="let n of numbers" (click)="openSell(n)" [class.sold]="hasSold(n)"
+          [class.winner]="n === currentNumber" class="ticket-cell">
           <div class="cell">
             {{ n }}
             <ion-icon name="close-outline" *ngIf="tickets[n]?.sold_at"></ion-icon>
