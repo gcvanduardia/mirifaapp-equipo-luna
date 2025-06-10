@@ -4,8 +4,8 @@
 
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:3050/api',
-  apiUrl2: 'https://api.mirifaapp.com/api',
+  apiUrl2: 'http://localhost:3050/api',
+  apiUrl: 'https://api.mirifaapp.com/api',
 };
 
 /*
